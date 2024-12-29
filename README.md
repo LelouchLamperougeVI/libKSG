@@ -45,7 +45,7 @@ ksg_mi(x: np.ndarray, y: np.ndarray, k=5)
 > Returns:
 > >  I:      mutual information
 
-# Example
+## Example
 Quick sketch with colab:
 ![example output](example.png)
 ```python

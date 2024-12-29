@@ -34,7 +34,7 @@ The two columns represent the x/y coordinates of data points for a total of ```N
 
 ### Python
 The following Python wrapper is provided:
-```Python
+```python
 ksg_mi(x: np.ndarray, y: np.ndarray, k=5)
 ```
 > Parameters:
@@ -44,3 +44,71 @@ ksg_mi(x: np.ndarray, y: np.ndarray, k=5)
 >
 > Returns:
 > >  I:      mutual information
+
+# Example
+Quick sketch with colab:
+![example output](example.png)
+```python
+!sudo apt-get install libgsl-dev
+!git clone https://github.com/LelouchLamperougeVI/libKSG.git
+%cd libKSG
+!make
+
+import numpy as np
+from scipy.stats import pearsonr
+import matplotlib.pyplot as plt
+from ksg_mi import ksg_mi
+
+n = 1_000;
+
+fig, ax = plt.subplots(2, 3, figsize=(10, 5))
+
+x = np.random.rand(n)
+y = np.random.rand(n)
+r = pearsonr(x, y)[0]
+I = ksg_mi(x, y)
+ax[0, 0].scatter(x, y, alpha=.1)
+ax[0, 0].set_title("r = " + str(r) + "\nI = " + str(I), fontsize=9)
+
+x = np.linspace(0, 1, n)
+y = np.random.randn(n)
+r = pearsonr(x, y)[0]
+I = ksg_mi(x, y)
+ax[0, 1].scatter(x, y, alpha=.1)
+ax[0, 1].set_title("r = " + str(r) + "\nI = " + str(I), fontsize=9)
+
+x = np.random.rand(n) * 10
+y = x + np.random.randn(n)
+r = pearsonr(x, y)[0]
+I = ksg_mi(x, y)
+ax[0, 2].scatter(x, y, alpha=.1)
+ax[0, 2].set_title("r = " + str(r) + "\nI = " + str(I), fontsize=9)
+
+theta = np.linspace(0, 2*np.pi, n)
+phi = np.random.randn(n) + 10
+x = phi * np.cos(theta)
+y = phi * np.sin(theta)
+r = pearsonr(x, y)[0]
+I = ksg_mi(x, y)
+ax[1, 0].scatter(x, y, alpha=.1)
+ax[1, 0].set_title("r = " + str(r) + "\nI = " + str(I), fontsize=9)
+
+x = np.linspace(-5, 5, n)
+y = x**2 + np.random.randn(n)
+r = pearsonr(x, y)[0]
+I = ksg_mi(x, y)
+ax[1, 1].scatter(x, y, alpha=.1)
+ax[1, 1].set_title("r = " + str(r) + "\nI = " + str(I), fontsize=9)
+
+x = np.linspace(0, 4*np.pi, n)
+y = np.cos(x)*5 + np.random.randn(n)
+r = pearsonr(x, y)[0]
+I = ksg_mi(x, y)
+ax[1, 2].scatter(x, y, alpha=.1)
+ax[1, 2].set_title("r = " + str(r) + "\nI = " + str(I), fontsize=9)
+
+for a in ax.flatten():
+    a.set_xticks([])
+    a.set_yticks([])
+    a.set_box_aspect(1)
+```

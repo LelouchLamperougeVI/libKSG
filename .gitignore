@@ -1,2 +1,6 @@
 libksg.so
 test
+libKSG.egg-info/
+dist/
+libKSG/__pycache__/
+test/

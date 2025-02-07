@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=75.1.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libKSG"
+version = "0.0.1"
+authors = [
+  { name="HaoRan Chang", email="haoran.chang@mail.mcgill.ca" },
+]
+description = "Compute Mutual Information using the KSG estimator (1st algo)"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+]
+license = {file = "LICENSE"}
+
+dependencies = ["numpy>=1.26"]
+
+[project.urls]
+Homepage = "https://github.com/LelouchLamperougeVI/libKSG"
+Issues = "https://github.com/LelouchLamperougeVI/libKSG/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["libKSG"]
+exclude = ["libKSG.data", "libKSG.src"]
+namespaces = false
+
+[tool.setuptools]
+ext-modules = [
+    {name = "cksg", sources = ["libKSG/src/ksg.c", "libKSG/src/kdtree.c", "libKSG/src/unique.c"], include-dirs = ["libKSG/src"], libraries = ["m", "gsl"], extra-compile-args = ["-O3", "-Wall", "-shared", "-fPIC"], depends = ["libKSG/src/ksg.h"]}
+]

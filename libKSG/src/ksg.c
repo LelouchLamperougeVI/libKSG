@@ -51,6 +51,8 @@ int search (double *sorted, double low, double high, size_t N) {
     double *top = binarysearch(sorted, &high, N);
     while (*top >= high)
         top--;
+    if (top - base < 1)
+        return 1;
     return top - base;
 }
 

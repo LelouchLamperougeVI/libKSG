@@ -51,8 +51,8 @@ int search (double *sorted, double low, double high, size_t N) {
     double *top = binarysearch(sorted, &high, N);
     while (*top >= high)
         top--;
-    if (top - base < 1)
-        return 1;
+    if (top - base < 0)
+        return 0;
     return top - base;
 }
 
@@ -89,9 +89,9 @@ double ksg (double *x, size_t N, int k) {
             high = x[i*2 + j] + ex;
             low = x[i*2 + j] - ex;
             if (!j)
-                I += gsl_sf_psi_int(search(sortx, low, high, N));
+                I += gsl_sf_psi_int(search(sortx, low, high, N) + 1);
             else
-                I += gsl_sf_psi_int(search(sorty, low, high, N));
+                I += gsl_sf_psi_int(search(sorty, low, high, N) + 1);
         }
     }
     I /= N;

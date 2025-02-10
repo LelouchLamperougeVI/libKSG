@@ -4,3 +4,4 @@ libKSG.egg-info/
 dist/
 libKSG/__pycache__/
 test/
+build/

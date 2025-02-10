@@ -12,8 +12,9 @@ class KSG:
         self.lib.restype = ctypes.c_double
 
     def mi(self, x: np.ndarray, y: np.ndarray, k: int = 5, axis: int = 0, keepdims: bool = False):
-        x = np.swapaxes(x, 0, axis)
-        y = np.swapaxes(y, 0, axis)
+        assert k > 0, 'k must be a positive integer'
+        x = np.moveaxis(x, axis, 0)
+        y = np.moveaxis(y, axis, 0)
 
         if x.ndim == 1:
             x = x[np.newaxis, :]
